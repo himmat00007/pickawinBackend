@@ -33,7 +33,7 @@ const userUtil = {
     },
     checkUsernameExistance: async (data) => {
         let { user_name } = data;
-       
+
         let result = await getSingleData(users, {
             user_name,
             status: { $ne: 2 }
@@ -57,16 +57,16 @@ const userUtil = {
 }
 addVerifiedUsers = async (data) => {
 
-    let { name, password, email, fcm_token,user_name } = data;
+    let { name, password, email, fcm_token, user_name } = data;
     let emailCheck = await userUtil.checkEmailExistance(data)
     let userCheck = await userUtil.checkUsernameExistance(data)
-    if(!userCheck.status){
+    if (!userCheck.status) {
         return helpers.showResponse(false, Messages.USER_NAME_ALREADY, null, null, 200);
     }
     if (!emailCheck.status) {
         return helpers.showResponse(false, Messages.EMAIL_ALREADY, null, null, 200);
     }
-    
+
     let newObj = {
         name,
         email,
@@ -91,10 +91,10 @@ addVerifiedUsers = async (data) => {
 addUser = async (data) => {
     let { login_source } = data;
     if (login_source === "email") {
-        let { name, password, email, fcm_token,profile_pic,user_name } = data;
+        let { name, password, email, fcm_token, profile_pic, user_name } = data;
         let emailCheck = await userUtil.checkEmailExistance(data)
         let userCheck = await userUtil.checkUsernameExistance(data)
-        if(!userCheck.status){
+        if (!userCheck.status) {
             return helpers.showResponse(false, Messages.USER_NAME_ALREADY, null, null, 200);
         }
         if (!emailCheck.status) {
@@ -295,7 +295,7 @@ forgotPasswordMail = async (data) => {
     let result = await updateByQuery(users, UserData, { email: email.toLowerCase(), login_source: "email", status: { $ne: 2 } });
     if (result.status) {
         // email sent code here
-        sendEmail(email, "MotivateYou", JSON.stringify(otp), null, () => {
+        sendEmail(email, "PickAwins", JSON.stringify(otp), null, () => {
             return helpers.showResponse(true, Messages.FP_EMAIL_SENT, null, null, 200);
         })
         return helpers.showResponse(true, Messages.FP_EMAIL_SENT, null, null, 200);
@@ -352,7 +352,7 @@ updateProfile = async (data) => {
         delete data.created_on
     }
     data.updated_on = moment().unix()
-    let response = await updateData(users, data, ObjectId(_id), "motivation_fields.motivation_field_id plan_id");
+    let response = await updateData(users, data, ObjectId(_id));
     if (response.status) {
         return helpers.showResponse(true, 'Success', response.data, null, 200);
     }
