@@ -6,7 +6,7 @@ var Users = new Schema({
         type: String,
         default: ''
     },
-    user_name:{
+    user_name: {
         type: String,
         default: ''
     },
@@ -26,7 +26,7 @@ var Users = new Schema({
         type: String,
         default: ''
     },
-    phone:{
+    phone: {
         type: String,
         default: ''
     },
@@ -86,7 +86,11 @@ var Users = new Schema({
         type: String,
         default: 'User'
     },
-    planEndDate:{
+    planEndDate: {
+        type: String,
+        default: ''
+    },
+    planEnd: {
         type: String,
         default: ''
     }
